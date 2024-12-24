@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 class UserRestrictedSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['name','email','username','role','phone']
+        fields = ['name','email','username','role','phone','account_status']
 class TalentSerializer(serializers.ModelSerializer):
     user = UserRestrictedSerializer(source='user_id', read_only=True)
     class Meta:
