@@ -25,13 +25,17 @@ urlpatterns = [
     path('employers/create/', views.CreateEmployer.as_view(), name='employer-create'),
     # JobPosting URLs
     path('jobs/', views.SeeJobPosting.as_view(), name='job-list'),
+    path('jobs/<int:pk>/', views.SeeSingleJobPostingById.as_view(), name='jobs-by-job_id'),
     path('jobs/<int:pk>/update/', views.UpdateJobPosting.as_view(), name='job-update'),
     path('jobs/create/', views.CreateJobPosting.as_view(), name='job-create'),
+    path('jobs/delete/<int:pk>', views.DeleteJobPosting.as_view(), name='jobs-delete-by-job_id'),
 
     # JobApplication URLs
     path('applications/', views.SeeJobApplication.as_view(), name='application-list'),
+    path('applications/<int:pk>/', views.SeeSingleJobApplicationById.as_view(), name='application-by-application_id'),
     path('applications/<int:pk>/update/', views.UpdateJobApplication.as_view(), name='application-update'),
     path('applications/create/', views.CreateJobApplication.as_view(), name='application-create'),
+    path('applications/delete/<int:pk>', views.DeleteJobApplication.as_view(), name='application-delete-by-application_id'),
 
     # Consultant URLs
     path('consultants/', views.SeeConsultant.as_view(), name='consultant-list'),

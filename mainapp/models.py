@@ -49,6 +49,7 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     systemdate = models.DateTimeField(default=datetime.now,blank=True,null=True)
+    photo = models.ImageField(upload_to="user/photos/",blank=True,null=True,default="")
     account_status = models.CharField(
         max_length=15,
         choices=ACCOUNT_STATUS,
@@ -72,8 +73,15 @@ class Talent(models.Model):
     website = models.CharField(max_length=30, blank=True, null=True)
     country = models.CharField(max_length=20, blank=True, null=True)
     city = models.CharField(max_length=20, blank=True, null=True)
-    area = models.CharField(max_length=20, blank=True, null=True)
-    photo = models.ImageField(upload_to='photos/', blank=True, null=True)
+    area = models.CharField(max_length=50,blank=True, null=True)
+    province = models.CharField(max_length=50,blank=True, null=True)
+    language = models.JSONField( blank=True, default=list)
+    age = models.CharField(max_length=20, blank=True, null=True)
+    education_level = models.CharField(max_length=200, blank=True, null=True)
+    education_details = models.JSONField( blank=True, default=list)
+    experience = models.CharField(max_length=200, blank=True, null=True)
+    experience_details = models.JSONField( blank=True, default=list)
+    awards = models.JSONField( blank=True, default=list)
     open_to_work = models.BooleanField(default=True,blank=True, null=True)
     gender = models.CharField(max_length=20, blank=True, null=True)
     dob = models.CharField(max_length=30, blank=True, null=True)
@@ -107,9 +115,9 @@ class Employer(models.Model):
     experiences = models.JSONField(blank=True, null=True, default=list)
     website = models.CharField(max_length=30,blank=True, null=True)
     country = models.CharField(max_length=20,blank=True, null=True)
-    city = models.CharField(max_length=20,blank=True, null=True)
-    area = models.CharField(max_length=20,blank=True, null=True)
-    photo = models.FileField(upload_to='employer_photos/', blank=True, null=True)
+    city = models.CharField(max_length=50,blank=True, null=True)
+    area = models.CharField(max_length=50,blank=True, null=True)
+    province = models.CharField(max_length=20,blank=True, null=True)
     gender = models.CharField(max_length=20, blank=True, null=True)
     dob = models.CharField(max_length=30, blank=True, null=True)
     saved_jobs = models.JSONField(null=True,blank=True, default=list)
@@ -200,6 +208,8 @@ class JobPosting(models.Model):
     )
     views = models.PositiveIntegerField(default=0)
     tags = models.JSONField(blank=True, null=True,default=list)
+    total_applicats=models.PositiveIntegerField(default=0)
+    ap_deadline= models.CharField(max_length=30, blank=True, null=True)
     systemdate = models.DateTimeField(default=datetime.now,blank=True,null=True)
 
     def __str__(self):
@@ -266,8 +276,18 @@ class Consultant(models.Model):
     website = models.CharField(max_length=30, blank=True, null=True)
     country = models.CharField(max_length=20, blank=True, null=True)
     city = models.CharField(max_length=20, blank=True, null=True)
-    area = models.CharField(max_length=20, blank=True, null=True)
-    photo = models.ImageField(upload_to="consultants/photos/", blank=True, null=True)
+
+    language = models.JSONField( blank=True, default=list)
+    age = models.CharField(max_length=20, blank=True, null=True)
+    education_level = models.CharField(max_length=200, blank=True, null=True)
+    education_details = models.JSONField( blank=True, default=list)
+    experience = models.CharField(max_length=200, blank=True, null=True)
+    experience_details = models.JSONField( blank=True, default=list)
+    awards = models.JSONField( blank=True, default=list)
+
+
+    area = models.CharField(max_length=50, blank=True, null=True)
+    province = models.CharField(max_length=50,blank=True, null=True)
     gender = models.CharField(max_length=20, blank=True, null=True)
     dob = models.CharField(max_length=30, blank=True, null=True)
     saved_jobs = models.JSONField(blank=True, null=True)

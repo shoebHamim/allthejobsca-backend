@@ -11,18 +11,30 @@ class UserSerializer(serializers.ModelSerializer):
 class UserRestrictedSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['name','email','username','role','phone','account_status']
+        fields = ['name','email','username','role','phone','account_status','photo']
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+        extra_kwargs = {field: {'required': False} for field in fields}
 class TalentSerializer(serializers.ModelSerializer):
     user = UserRestrictedSerializer(source='user_id', read_only=True)
     class Meta:
         model = Talent
         fields = '__all__'
+class TalentUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Talent
+        fields = '__all__'
+        extra_kwargs = {field: {'required': False} for field in fields}
 class EmployerSerializer(serializers.ModelSerializer):
     user = UserRestrictedSerializer(source='user_id', read_only=True)
     class Meta:
         model = Employer
         fields = '__all__'
+
 class JobPostingSerializer(serializers.ModelSerializer):
+    employer=EmployerSerializer(source='employer_id',read_only=True)
     class Meta:
         model = JobPosting
         fields = '__all__'

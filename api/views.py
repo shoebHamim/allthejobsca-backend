@@ -2,7 +2,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from mainapp.models import User,Talent,Employer,JobPosting,JobApplication,Consultant,Consultation,Review,Testimonial,Package,PackageInvoice
-from .serializers import UserSerializer,TalentSerializer,EmployerSerializer,JobPostingSerializer,JobApplicationSerializer,ConsultantSerializer,ConsultationSerializer,ReviewSerializer,TestimonialSerializer,PackageSerializer,PackageInvoiceSerializer
+from .serializers import UserSerializer,UserUpdateSerializer,TalentSerializer,EmployerSerializer,JobPostingSerializer,JobApplicationSerializer,ConsultantSerializer,ConsultationSerializer,ReviewSerializer,TestimonialSerializer,PackageSerializer,PackageInvoiceSerializer
 
 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -30,7 +30,7 @@ class SeeUser(generics.ListAPIView):
     lookup_field = 'email'
 class UpdateUser(generics.UpdateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserUpdateSerializer
     lookup_field = 'email'
 class CreateUser(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -77,6 +77,10 @@ class CreateEmployer(generics.CreateAPIView):
 class SeeJobPosting(generics.ListAPIView):
     queryset = JobPosting.objects.all()
     serializer_class = JobPostingSerializer
+class SeeSingleJobPostingById(generics.RetrieveAPIView):
+    queryset = JobPosting.objects.all()
+    serializer_class = JobPostingSerializer
+    lookup_field = 'pk'
 
 class UpdateJobPosting(generics.UpdateAPIView):
     queryset = JobPosting.objects.all()
@@ -85,11 +89,20 @@ class UpdateJobPosting(generics.UpdateAPIView):
 class CreateJobPosting(generics.CreateAPIView):
     queryset = JobPosting.objects.all()
     serializer_class = JobPostingSerializer
+class DeleteJobPosting(generics.DestroyAPIView):
+    queryset = JobPosting.objects.all()
+    lookup_field = 'pk'
+    serializer_class = JobPostingSerializer
 
 # JobApplication Views
 class SeeJobApplication(generics.ListAPIView):
     queryset = JobApplication.objects.all()
     serializer_class = JobApplicationSerializer
+
+class SeeSingleJobApplicationById(generics.RetrieveAPIView):
+    queryset = JobApplication.objects.all()
+    serializer_class = JobApplicationSerializer
+    lookup_field = 'pk'
 
 class UpdateJobApplication(generics.UpdateAPIView):
     queryset = JobApplication.objects.all()
@@ -98,7 +111,10 @@ class UpdateJobApplication(generics.UpdateAPIView):
 class CreateJobApplication(generics.CreateAPIView):
     queryset = JobApplication.objects.all()
     serializer_class = JobApplicationSerializer
-
+class DeleteJobApplication(generics.DestroyAPIView):
+    queryset = JobApplication.objects.all()
+    lookup_field = 'pk'
+    serializer_class = JobApplicationSerializer
 # Consultant Views
 class SeeConsultant(generics.ListAPIView):
     queryset = Consultant.objects.all()
